@@ -10,6 +10,17 @@
                 @typing="getFilteredTags">
             </b-taginput>
         </b-field>
+        <!--
+        <b-field label="Filter by Shipping Origin">
+            <b-taginput
+                v-model="allowedOrigins"
+                :data="['China', 'Australia', 'US', 'UK']"
+                autocomplete
+                field="shippingOrigin"
+                placeholder="Filter by shipping origin country">
+            
+            </b-taginput>
+        </b-field>-->
         <br/>
         <b-table 
             :data=filteredVendors
@@ -57,6 +68,7 @@ export default {
             filteredVendors: tvendors.vendors,
             filteredTags: productTypesData,
             tags: [],
+            allowedOrigins: [],
             flags: {
                 "China": "🇨🇳",
                 "Taiwan": "🇹🇼",
@@ -72,14 +84,12 @@ export default {
                 return productType.toLowerCase().includes(text.toLowerCase())
             })
         },
-        getFilteredVendors() {
+        filterVendors() {
             if (this.tags.length === 0) {
-                console.log("flag")
-                console.log(tvendors.vendors)
                 this.filteredVendors = tvendors.vendors
             } else {
                 this.filteredVendors = tvendors.vendors.filter((vendor) => {
-                    return this.tags.some(r => vendor.productTypes.includes(r))
+                    return this.tags.some(r => vendor.productTypes.includes(r)) && this.allowedOrigins.includes(vendor.shippingOrigin)
                 })
             }
         }
@@ -87,7 +97,7 @@ export default {
     watch: {
         tags: {
             handler() {
-                this.getFilteredVendors()
+                this.filterVendors()
             },
             deep: true
         }

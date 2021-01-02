@@ -7,7 +7,7 @@
                         <h1 class="title">tvendors</h1>
                         <h2 class="subtitle">Looking for a specific type of product but not sure where to get it from? Use tvendors.</h2>
                         <div>
-                            <b-button>Can't Find a Vendor? Let us Know!</b-button>
+                            <b-button tag="a" href="https://forms.gle/MSkFQr1g7kNTfTwr9">Can't Find a Vendor? Let us Know!</b-button>
                             <br/><br/>
                         </div>
                         <div>
