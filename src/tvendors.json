@@ -1,0 +1,126 @@
+{
+    "vendors": [
+        {
+            "name": "White2Tea",
+            "id": "white2tea",
+            "url": "https://white2tea.com/",
+            "logoUrl": "https://cdn.shopify.com/s/files/1/0313/6064/7305/files/White2tea_Favicon_228x228.png?v=1581071144",
+            "shippingOrigin": "China",
+            "shippingRange": "International",
+            "style": "Gong Fu",
+            "description": "Sells a highly curated selection of self-pressed and some factory Pu Erh. Also has some higher-end oolong and black tea, and some teaware.",
+            "specialties": [],
+            "productTypes": [
+                "Teaware",
+                "Tea",
+                "Shou",
+                "Sheng",
+                "Black",
+                "Oolong",
+                "White"
+            ]
+        },
+        {
+            "name": "Yunnan Sourcing",
+            "id": "yunnansourcing",
+            "url": "https://yunnansourcing.com/",
+            "logoUrl": "https://cdn.shopify.com/s/files/1/0586/9817/t/23/assets/logo.png?v=12052807721045824086",
+            "shippingOrigin": "China",
+            "shippingRange": "International",
+            "style": "Gong Fu",
+            "description": "Provides a fantastic range of teas from all over China. Excellent selection of Shou and Sheng, oolongs, blacks, whites, etc.",
+            "specialties": [],
+            "productTypes": [
+                "Teaware",
+                "Yixing",
+                "Tea",
+                "Shou",
+                "Sheng",
+                "Black",
+                "Oolong",
+                "White",
+                "Green"
+            ]
+        },
+        {
+            "name": "Crimson Lotus",
+            "id": "crimsonlotus",
+            "url": "https://crimsonlotustea.com/",
+            "logoUrl": "https://pbs.twimg.com/profile_images/378800000521458415/c170f42a83dc21d3260e7c3d646605ee_400x400.png",
+            "shippingOrigin": "China",
+            "shippingRange": "International",
+            "style": "Gong Fu",
+            "description": "Crimson Lotus specializes in Pu Erh, and provides a highly curated collection of self-pressed and some factory teas.",
+            "specialties": [
+                "Pu Erh"
+            ],
+            "productTypes": [
+                "Teaware",
+                "Tea",
+                "Shou",
+                "Sheng"
+            ]
+        },
+        {
+            "name": "Kuura",
+            "id": "kuura",
+            "url": "https://kuura.co/",
+            "logoUrl": "https://cdn.shopify.com/s/files/1/1833/7495/files/KUURA_FAV_128px_228x228.png?v=1590795761",
+            "shippingOrigin": "Australia",
+            "shippingRange": "International",
+            "style": "Gong Fu",
+            "description": "",
+            "specialties": [],
+            "productTypes": [
+                "Teaware",
+                "Tea",
+                "Shou",
+                "Sheng",
+                "Pu Erh",
+                "White",
+                "Black",
+                "Teapot",
+                "Gaiwan",
+                "Cup",
+                "Pick",
+                "Cake Storage Bag",
+                "Travel Set"
+            ]
+        }
+    ],
+    "productTypes": {
+        "all": [
+            "Yixing",
+            "Gaiwan",
+            "Pu Erh",
+            "Pot",
+            "Teapot",
+            "Kyusu",
+            "Cup",
+            "Pick",
+            "Cake Storage Bag",
+            "Travel Set",
+            "Teaware",
+            "Tea",
+            "Shou",
+            "Sheng",
+            "Pu Erh",
+            "White",
+            "Black",
+            "Hei Cha",
+            "Green",
+            "Oolong",
+            "Yellow",
+            "Cha Hai",
+            "Gong Dao Bei",
+            "Tea Pet",
+            "Teaware Box",
+            "Bamboo Charcoal",
+            "Tea Towel",
+            "Tea Table",
+            "Pot Luffa",
+            "Cake Stand",
+            "Cha Dao"
+        ]
+    }
+}
