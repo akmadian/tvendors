@@ -89,7 +89,7 @@ export default {
                 this.filteredVendors = tvendors.vendors
             } else {
                 this.filteredVendors = tvendors.vendors.filter((vendor) => {
-                    return this.tags.some(r => vendor.productTypes.includes(r)) && this.allowedOrigins.includes(vendor.shippingOrigin)
+                    return this.tags.some(r => vendor.productTypes.includes(r))
                 })
             }
         }

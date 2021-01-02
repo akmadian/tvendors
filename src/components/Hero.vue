@@ -18,11 +18,11 @@
                                     tvendors is open source
                                  </p>
                             </b-button>
-                            <b-button tag="a" href="https://discord.gg/qeGMFjvg5D" size="is-small">
+                            <b-button tag="a" href="https://discord.gg/tea" size="is-small">
                                  <img src="../assets/discord.png" 
                                  style="height: 1.3rem; width: auto; vertical-align: middle; display: inline;"> 
                                  <p style="vertical-align: middle; display: inline; margin-left: .5rem;">
-                                    Looking for CommuniTEA? Join the r/tea Discord server!
+                                    Looking for CommuniTEA? Join the CommuniTEA Discord server!
                                  </p>
                             </b-button>
                         </div>
