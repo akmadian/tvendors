@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <Hero />
-    <MainTable />
-    <p id="version">v0.0.1</p>
+    <div id="content">
+      <MainTable />
+    </div>
+    <p id="version">v0.0.2</p>
   </div>
 </template>
 
@@ -31,7 +33,11 @@ export default {
 #app {
   width: 70%;
   margin: 0 auto;
-  margin-top: 5rem;
+}
+
+#content {
+  width: 95%;
+  margin: 0 auto;
 }
 
 #version {

@@ -2,25 +2,15 @@
     <span>
         <b-field label="Search For Products">
             <b-taginput
+                id="search-field"
                 v-model="tags"
                 :data="filteredTags"
                 autocomplete
                 field="product.type"
-                placeholder="Search for tea types or products. For Example: Pu Erh, or Yixing Pots"
+                placeholder="Search for tea types or products. For Example: Pu Erh, or Yixing"
                 @typing="getFilteredTags">
             </b-taginput>
         </b-field>
-        <!--
-        <b-field label="Filter by Shipping Origin">
-            <b-taginput
-                v-model="allowedOrigins"
-                :data="['China', 'Australia', 'US', 'UK']"
-                autocomplete
-                field="shippingOrigin"
-                placeholder="Filter by shipping origin country">
-            
-            </b-taginput>
-        </b-field>-->
         <br/>
         <b-table 
             :data=filteredVendors
@@ -39,7 +29,7 @@
                     {{ props.row.style }}
                 </b-tag>
             </b-table-column>
-            <b-table-column field="shippingOrigin" label="Shipping Origin" v-slot="props">
+            <b-table-column field="shippingOrigin" label="Shipping Origin" v-slot="props" searchable>
                 {{ flags[props.row.shippingOrigin]}}
                 {{ props.row.shippingOrigin }}
             </b-table-column>
@@ -51,7 +41,7 @@
                     <b-tag :key="specialty" rounded>{{ specialty }}</b-tag>
                 </template>
             </b-table-column>
-            <b-table-column field="description" label="Description" v-slot="props">
+            <b-table-column field="description" label="Description" v-slot="props" searchable>
                 {{ props.row.description }}
             </b-table-column>
         </b-table>
@@ -67,6 +57,7 @@ export default {
         return {
             filteredVendors: tvendors.vendors,
             filteredTags: productTypesData,
+            originCountries: tvendors.shippingOriginCountries,
             tags: [],
             allowedOrigins: [],
             flags: {
@@ -104,3 +95,12 @@ export default {
     }
 }
 </script>
+<style>
+    .table td {
+        border-bottom: none !important;
+    }
+
+    .table th {
+        border-bottom: 1px solid #dbdbdb !important;
+    }
+</style>

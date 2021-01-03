@@ -341,5 +341,12 @@
             "Pouch",
             "Bag"
         ]
-    }
+    },
+    "shippingOriginCountries": [
+        "US",
+        "UK",
+        "Australia",
+        "China",
+        "Taiwan"
+    ]
 }
