@@ -67,7 +67,7 @@ export default {
     props: ['vendor'],
     data() {
         return {
-            modalOpen: true,
+            modalOpen: false,
             submitReviewOpen: true
         }
     },

@@ -6,6 +6,7 @@
       <MainTable />
     </div>
     <span id="footer">
+      <br><br><br>
       <div>
         v0.0.2 | 
         Designed and built by <a href="https://arimadian.info">Ari Madian</a> (bandsaw bandit in CommuniTEA) | 
