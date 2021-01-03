@@ -11,7 +11,10 @@ Planned features include:
 
 ![Screenshot of tvendors](screenshot.png)
 
-## How to run this locally
+## Technical Stuff
+tvendors is made with a Vue.js frontend, and a MongoDB/ GraphQL backend.
+
+### How to run this locally
 ``` bash
 $ npm i
 
