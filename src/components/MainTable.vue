@@ -29,19 +29,19 @@
                     {{ props.row.style }}
                 </b-tag>
             </b-table-column>
-            <b-table-column field="shippingOrigin" label="Shipping Origin" v-slot="props" searchable>
+            <b-table-column field="shippingOrigin" label="Shipping Origin" v-slot="props">
                 {{ flags[props.row.shippingOrigin]}}
                 {{ props.row.shippingOrigin }}
             </b-table-column>
-            <b-table-column field="shippingRange" label="Shipping Range" v-slot="props">
+            <!--<b-table-column field="shippingRange" label="Shipping Range" v-slot="props">
                 {{ props.row.shippingRange }}
-            </b-table-column>
+            </b-table-column>-->
             <b-table-column field="specialties" label="Specialties" v-slot="props">
                 <template v-for="specialty in props.row.specialties">
                     <b-tag :key="specialty" rounded>{{ specialty }}</b-tag>
                 </template>
             </b-table-column>
-            <b-table-column field="description" label="Description" v-slot="props" searchable>
+            <b-table-column field="description" label="Description" v-slot="props">
                 {{ props.row.description }}
             </b-table-column>
         </b-table>

@@ -28,7 +28,7 @@
                                  <img src="../assets/discord.png" 
                                  style="height: 1.3rem; width: auto; vertical-align: middle; display: inline;"> 
                                  <p style="vertical-align: middle; display: inline; margin-left: .5rem;">
-                                    Looking for CommuniTEA? Join the CommuniTEA Discord server!
+                                    Join the CommuniTEA Discord server!
                                  </p>
                             </b-button>
                         </div>
