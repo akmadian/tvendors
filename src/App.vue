@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Hero />
+    <ReviewsModal vendor="vendor2"/>
     <div id="content">
       <MainTable />
     </div>
@@ -11,12 +12,14 @@
 <script>
 import Hero from './components/Hero'
 import MainTable from './components/MainTable'
+import ReviewsModal from './components/ReviewsModal'
 
 export default {
   name: 'App',
   components: {
     Hero,
-    MainTable
+    MainTable,
+    ReviewsModal
   },
   metaInfo: {
     meta: [
@@ -31,7 +34,7 @@ export default {
 
 <style>
 #app {
-  width: 70%;
+  width: 85%;
   margin: 0 auto;
 }
 
