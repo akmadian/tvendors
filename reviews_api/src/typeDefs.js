@@ -1,9 +1,5 @@
-if (process.env.NODE_ENV === "production") {
-    import pkg from 'apollo-server-express';
-    const { gql } = pkg;
-} else {
-    import { gql } from 'apollo-server-express'
-}
+import pkg from 'apollo-server-express';
+const { gql } = pkg;
 
 export const typeDefs = gql`
 type Query {

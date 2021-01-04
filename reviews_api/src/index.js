@@ -1,9 +1,5 @@
-if (process.env.NODE_ENV === "production") {
-    import pkg from 'apollo-server-express';
-    const { ApolloServer, gql } = pkg;
-} else {
-    import { ApolloServer, gql } from 'apollo-server-express'    
-}
+import pkg from 'apollo-server-express';
+const { ApolloServer } = pkg;
 import express from 'express'
 import {resolvers} from './resolvers.js'
 import { typeDefs } from './typeDefs.js'
@@ -25,7 +21,7 @@ const startServer = async () => {
     });
 
     app.listen({ port: 5000 }, () => 
-        console.log(`Server ready at https://localhost:5000${server.graphqlPath}`)
+        console.log(`Server ready at http://localhost:5000${server.graphqlPath}`)
     )
 }
 
