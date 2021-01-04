@@ -1,11 +1,13 @@
 import pkg from 'apollo-server-express';
 const { ApolloServer } = pkg;
+import {cors} from 'cors'
 import express from 'express'
 import {resolvers} from './resolvers.js'
 import { typeDefs } from './typeDefs.js'
 import mongoose from 'mongoose'
 
 const app = express()
+app.use(cors())
 
 const startServer = async () => {
     const server = new ApolloServer({
