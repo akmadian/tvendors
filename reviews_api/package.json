@@ -9,7 +9,6 @@
     "build": "graphpack build",
     "start": "nodemon --exec babel-node src/index.js"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
