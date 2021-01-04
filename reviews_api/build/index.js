@@ -366,81 +366,45 @@ webpackContext.id = "./src sync recursive ^\\.\\/(resolvers|resolvers\\/index)\\
   !*** ./src sync ^\.\/(schema|schema\/index)\.(gql|graphql|js|ts)$ ***!
   \********************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var map = {
-	"./schema.graphql": "./src/schema.graphql"
-};
-
-
-function webpackContext(req) {
-	var id = webpackContextResolve(req);
-	return __webpack_require__(id);
+function webpackEmptyContext(req) {
+	var e = new Error("Cannot find module '" + req + "'");
+	e.code = 'MODULE_NOT_FOUND';
+	throw e;
 }
-function webpackContextResolve(req) {
-	if(!__webpack_require__.o(map, req)) {
-		var e = new Error("Cannot find module '" + req + "'");
-		e.code = 'MODULE_NOT_FOUND';
-		throw e;
-	}
-	return map[req];
-}
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = "./src sync recursive ^\\.\\/(schema|schema\\/index)\\.(gql|graphql|js|ts)$";
+webpackEmptyContext.keys = function() { return []; };
+webpackEmptyContext.resolve = webpackEmptyContext;
+module.exports = webpackEmptyContext;
+webpackEmptyContext.id = "./src sync recursive ^\\.\\/(schema|schema\\/index)\\.(gql|graphql|js|ts)$";
 
 /***/ }),
 
-/***/ "./src/db.js":
-/*!*******************!*\
-  !*** ./src/db.js ***!
-  \*******************/
-/*! exports provided: users, reviews */
+/***/ "./src/models/review.js":
+/*!******************************!*\
+  !*** ./src/models/review.js ***!
+  \******************************/
+/*! exports provided: Review */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "users", function() { return users; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reviews", function() { return reviews; });
-let users = [{
-  id: 1,
-  name: "John Doe",
-  email: "john@gmail.com",
-  age: 22
-}, {
-  id: 2,
-  name: "Jane Doe",
-  email: "jane@gmail.com",
-  age: 23
-}];
-let reviews = [{
-  id: 1,
-  reviewer_name: "name1",
-  vendor_name: "vendor1",
-  review_date: "date",
-  likes: 0,
-  dislikes: 1,
-  review_body: "body1"
-}, {
-  id: 2,
-  reviewer_name: "name2",
-  vendor_name: "White2Tea",
-  review_date: "date2",
-  likes: 0,
-  dislikes: 2,
-  review_body: "body2"
-}, {
-  id: 3,
-  reviewer_name: "name3",
-  vendor_name: "White2Tea",
-  review_date: "date3",
-  likes: 0,
-  dislikes: 3,
-  review_body: "body3"
-}];
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Review", function() { return Review; });
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);
+
+const Review = mongoose__WEBPACK_IMPORTED_MODULE_0___default.a.model('Review', {
+  id: Number,
+  reviewer_name: String,
+  vendor_name: String,
+  review_date: {
+    type: Date,
+    default: Date.now
+  },
+  likes: Number,
+  dislikes: Number,
+  review_body: String
+});
 
 /***/ }),
 
@@ -448,62 +412,45 @@ let reviews = [{
 /*!**************************!*\
   !*** ./src/resolvers.js ***!
   \**************************/
-/*! exports provided: default */
+/*! exports provided: resolvers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db */ "./src/db.js");
-
-
-const uuidv4 = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resolvers", function() { return resolvers; });
+/* harmony import */ var _models_review_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./models/review.js */ "./src/models/review.js");
 
 const resolvers = {
   Query: {
-    reviews: (parent, {
+    reviews: (_, {
       vendor_name
-    }, context, info) => {
-      console.log(new Date().toLocaleString());
-      console.log(_db__WEBPACK_IMPORTED_MODULE_0__["reviews"].filter(rv => rv.vendor_name === vendor_name));
-      return _db__WEBPACK_IMPORTED_MODULE_0__["reviews"].filter(rv => rv.vendor_name === vendor_name);
+    }, __, ___) => {
+      const res = _models_review_js__WEBPACK_IMPORTED_MODULE_0__["Review"].find({
+        'vendor_name': vendor_name
+      }, 'reviewer_name id vendor_name review_date review_body likes dislikes');
+      console.log(res);
+      return res;
     },
-    review: (parent, {
+    review: (_, {
       id
-    }, context, info) => {
-      console.log(new Date().toLocaleString() + _db__WEBPACK_IMPORTED_MODULE_0__["reviews"].find(rv => rv.id === Number(id)));
-      return _db__WEBPACK_IMPORTED_MODULE_0__["reviews"].find(rv => rv.id === Number(id));
+    }, __, ___) => {
+      const res = _models_review_js__WEBPACK_IMPORTED_MODULE_0__["Review"].findOne({
+        'id': id
+      }, 'reviewer_name id vendor_name');
+      console.log(res);
+      return res;
     },
-    allreviews: (parent, args, context, info) => {
-      return _db__WEBPACK_IMPORTED_MODULE_0__["reviews"];
+    allreviews: (_, __, ___, ____) => {
+      return reviews;
     }
   },
   Mutation: {
-    createReview: (parent, {
-      reviewer_name,
-      vendor_name,
-      review_body
-    }, context, info) => {
-      const id = uuidv4();
-      const date = Date().toString();
-      const newReview = {
-        id,
-        reviewer_name,
-        vendor_name,
-        review_body,
-        likes: 0,
-        dislikes: 0,
-        review_date: date
-      };
-      console.log(newReview);
-      _db__WEBPACK_IMPORTED_MODULE_0__["reviews"].push(newReview);
-      return newReview;
-    },
-    updateLikeDislike: (parent, {
+    updateLikeDislike: (_, {
       id,
       isLike,
       add
-    }, context, info) => {
-      var review = _db__WEBPACK_IMPORTED_MODULE_0__["reviews"].find(review => review.id === Number(id));
+    }, __, ___) => {
+      var review = reviews.find(review => review.id === Number(id));
       console.log(review);
 
       if (isLike) {
@@ -521,45 +468,30 @@ const resolvers = {
       }
 
       return review;
+    },
+    createReview: async (_, {
+      reviewer_name,
+      vendor_name,
+      review_body
+    }, __, ___) => {
+      console.log(reviewer_name, vendor_name, review_body);
+      const id = Date.now();
+      const date = Date().toString();
+      const newReview = new _models_review_js__WEBPACK_IMPORTED_MODULE_0__["Review"]({
+        id,
+        reviewer_name,
+        vendor_name,
+        review_body,
+        likes: 0,
+        dislikes: 0,
+        review_date: date
+      });
+      await newReview.save();
+      console.log(newReview);
+      return newReview;
     }
   }
 };
-/* harmony default export */ __webpack_exports__["default"] = (resolvers);
-
-/***/ }),
-
-/***/ "./src/schema.graphql":
-/*!****************************!*\
-  !*** ./src/schema.graphql ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-    var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"allreviews"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"reviews"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"vendor_name"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Review"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"reviewer_name"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"vendor_name"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review_date"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"likes"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"dislikes"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review_body"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Mutation"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"createReview"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"reviewer_name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"vendor_name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"review_body"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"updateLikeDislike"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"isLike"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"add"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}},"directives":[]}]}],"loc":{"start":0,"end":521}};
-    doc.loc.source = {"body":"type Query {\n    allreviews: [Review!]!\n    review(id: ID!): Review\n    reviews(vendor_name: String): [Review!]!\n}\n\ntype Review {\n    id: ID\n    reviewer_name: String\n    vendor_name: String\n    review_date: String\n    likes: Int\n    dislikes: Int\n    review_body: String\n}\n\ntype Mutation {\n    createReview (\n        reviewer_name: String!,\n        vendor_name: String!,\n        review_body: String!\n    ): Review!\n    updateLikeDislike (\n        id: ID!,\n        isLike: Boolean!,\n        add: Boolean!\n    ): Review!\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-  
-
-    var names = {};
-    function unique(defs) {
-      return defs.filter(
-        function(def) {
-          if (def.kind !== 'FragmentDefinition') return true;
-          var name = def.name.value
-          if (names[name]) {
-            return false;
-          } else {
-            names[name] = true;
-            return true;
-          }
-        }
-      )
-    }
-  
-
-      module.exports = doc;
-    
-
 
 /***/ }),
 
@@ -652,6 +584,17 @@ module.exports = require("fs");
 
 /***/ }),
 
+/***/ "mongoose":
+/*!***************************!*\
+  !*** external "mongoose" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mongoose");
+
+/***/ }),
+
 /***/ "path":
 /*!***********************!*\
   !*** external "path" ***!
@@ -660,17 +603,6 @@ module.exports = require("fs");
 /***/ (function(module, exports) {
 
 module.exports = require("path");
-
-/***/ }),
-
-/***/ "uuid/v4":
-/*!**************************!*\
-  !*** external "uuid/v4" ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("uuid/v4");
 
 /***/ }),
 
