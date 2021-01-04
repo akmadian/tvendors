@@ -19,6 +19,7 @@
     "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "apollo-server-express": "^2.19.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "graphpack": "^1.0.9",
     "graphql": "^15.4.0",
