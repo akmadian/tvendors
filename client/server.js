@@ -1,5 +1,5 @@
 // optional: allow environment to specify port
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 8000
 
 // wire up the module
 const express = require('express') 

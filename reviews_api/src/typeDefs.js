@@ -1,4 +1,9 @@
-import { gql } from 'apollo-server-express'
+if (process.env.NODE_ENV === "production") {
+    import pkg from 'apollo-server-express';
+    const { gql } = pkg;
+} else {
+    import { gql } from 'apollo-server-express'
+}
 
 export const typeDefs = gql`
 type Query {
@@ -20,7 +25,7 @@ type Review {
 type Vendor {
     id: ID
     name: String
-    
+
 }
 
 

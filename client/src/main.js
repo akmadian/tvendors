@@ -15,7 +15,7 @@ Vue.config.productionTip = false
 import ApolloClient from 'apollo-boost'
 
 const apolloClient = new ApolloClient ({
-    uri: 'http://localhost:8000/graphql'
+    uri: 'http://localhost:5000/graphql'
 })
 
 const apolloProvider = new VueApollo({
