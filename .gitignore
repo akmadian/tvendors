@@ -21,3 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+reviews_api/digitalocean_tvendors_hosting
+reviews_api/digitalocean_tvendors_hosting.pub

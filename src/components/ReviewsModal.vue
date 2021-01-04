@@ -1,5 +1,9 @@
 <template>
     <div>
+        <button class="button is-small"
+            @click="modalOpen = true">
+            See Reviews
+        </button>
         <b-modal v-model="modalOpen">
             <div class="card">
                 <div class="card-content">
@@ -37,20 +41,38 @@
                                     </div>
                                 </div>
                                 <b-field label="Message">
-                                    <b-input maxlength="200" type="textarea"></b-input>
+                                    <b-input maxlength="200" type="textarea" v-model="submit_body"></b-input>
                                 </b-field>
-                                <b-button type="is-success is-light">Submit Review</b-button>
+                                <div class="columns">
+                                    <div class="column is-narrow">
+                                        <b-button 
+                                            type="is-success is-light"
+                                            @click="submitReview">
+                                            Submit Review
+                                        </b-button>
+                                    </div>
+                                    <div class="column submit-result">
+                                        <p v-if="submit_successful === true">
+                                            Review submitted successfuly!
+                                        </p>
+                                        <p v-if="submit_successful === false">
+                                            Oops, there was an issue with submitting your review, please try again.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </b-collapse>
                     <hr>
+                    {{ reviews }}
+                    <hr>
                     <div class="comments">
                         <div v-for="rev in reviews" :key="rev.id" class="comment">
                             <span>
-                                <b>{{ rev.reviewer_name }} {{ rev.review_date }}</b>
+                                <p><b>{{ rev.reviewer_name }}</b> <span class="review-date">{{ rev.review_date }}</span></p>
     
                                 <p>{{ rev.review_body }}</p>
-                                <p>{{ rev.likes }} likes, {{ rev.dislikes }} dislikes</p>
+                                <p style="display: none;">{{ rev.likes }} likes, {{ rev.dislikes }} dislikes</p>
                             </span>
                         </div>
                     </div>
@@ -67,8 +89,12 @@ export default {
     props: ['vendor'],
     data() {
         return {
-            modalOpen: false,
-            submitReviewOpen: true
+            modalOpen: this.vendor === "White2Tea",
+            submitReviewOpen: true,
+            submit_name: '',
+            submit_body: '',
+            submit_loading: false,
+            submit_successful: undefined
         }
     },
     apollo: {
@@ -86,10 +112,42 @@ export default {
             }`,
             variables() {
                 return {
-                    vendor_name: this.vendor,
-                    submit_name: ''
+                    vendor_name: this.vendor
                 }
             }
+        }
+    },
+    methods: {
+        async submitReview() {
+            this.submitLoading();
+            const result = await this.$apollo.mutate({
+                mutation: gql`mutation ($reviewer_name: String!, $review_body: String!, $vendor_name: String!) {
+                    createReview(reviewer_name: $reviewer_name, vendor_name: $vendor_name, review_body: $review_body) {
+                        id
+                    }
+                }`,
+                variables: {
+                    reviewer_name: this.submit_name.trim() !== "" ? this.submit_name : "Anonymous",
+                    review_body: this.submit_body,
+                    vendor_name: this.vendor
+                }
+            })
+            console.log(result)
+            console.log(result.data.createReview.id)
+            if (result.data.createReview.id) {
+                this.submit_successful = true
+            } else {
+                this.submit_successful = false
+            }
+            setTimeout(() => {
+                this.submit_successful = undefined
+            }, 3000)
+        },
+        submitLoading() {
+            this.submit_loading = true
+            setTimeout(() => {
+                this.isLoading = false
+            }, 5 * 1000)
         }
     }
 }
@@ -101,5 +159,14 @@ export default {
 
     .comment {
         margin-bottom: 1rem;
+    }
+
+    .review-date {
+        font-size: .8rem;
+        margin-left: .5rem;
+    }
+
+    .submit-result {
+        vertical-align: middle;
     }
 </style>

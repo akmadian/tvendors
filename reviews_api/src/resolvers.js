@@ -1,37 +1,30 @@
-import { users, reviews } from './db'
+import { Review } from './models/review.js'
 
-const resolvers = {
+export const resolvers = {
     Query: {
-        reviews: (parent, { vendor_name }, context, info) => {
-            console.log(new Date().toLocaleString())
-            console.log(reviews.filter(rv => rv.vendor_name === vendor_name))
-            return reviews.filter(rv => rv.vendor_name === vendor_name)
+        reviews: (_, { vendor_name }, __, ___) => {
+            const res = Review.find(
+                { 'vendor_name': vendor_name },
+                'reviewer_name id vendor_name review_date review_body likes dislikes'
+            )
+            console.log(res)
+            return res
             
         },
-        review: (parent, { id }, context, info) => {
-            console.log(new Date().toLocaleString() + reviews.find(rv => rv.id === Number(id)))
-            return reviews.find(rv => rv.id === Number(id));
+        review: (_, { id }, __, ___) => {
+            const res = Review.findOne(
+                { 'id': id },
+                'reviewer_name id vendor_name'
+            )
+            console.log(res)
+            return res
         },
-        allreviews: (parent, args, context, info) => {
+        allreviews: (_, __, ___, ____) => {
             return reviews;
         }
     },
     Mutation: {
-        createReview: (parent, {id, reviewer_name, vendor_name, review_body}, context, info) => {
-            const newReview = {
-                id,
-                reviewer_name,
-                vendor_name,
-                review_body,
-                likes: 0,
-                dislikes: 0,
-                review_date: "newdate"
-            }
-            
-            reviews.push(newReview)
-            return newReview
-        },
-        updateLikeDislike: (parent, {id, isLike, add}, context, info) => {
+        updateLikeDislike: (_, {id, isLike, add}, __, ___) => {
             var review = reviews.find(review => review.id === Number(id));
             console.log(review)
 
@@ -50,8 +43,23 @@ const resolvers = {
             }
 
             return review
+        },
+        createReview: async (_, { reviewer_name, vendor_name, review_body }, __, ___) => {
+            console.log(reviewer_name, vendor_name, review_body)
+            const id = Date.now()
+            const date = Date().toString()
+            const newReview = new Review({
+                id,
+                reviewer_name,
+                vendor_name,
+                review_body,
+                likes: 0,
+                dislikes: 0,
+                review_date: date
+            })
+            await newReview.save()
+            console.log(newReview)
+            return newReview
         }
     }
 }
-
-export default resolvers;

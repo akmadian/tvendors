@@ -6,12 +6,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "graphpack",
-    "build": "graphpack build"
+    "build": "graphpack build",
+    "start": "nodemon --exec babel-node src/index.js"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "graphpack": "^1.0.9"
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "apollo-server-express": "^2.19.1",
+    "express": "^4.17.1",
+    "graphpack": "^1.0.9",
+    "graphql": "^15.4.0",
+    "mongoose": "^5.11.9",
+    "nodemon": "^2.0.6",
+    "uuid": "^8.3.2"
   }
 }

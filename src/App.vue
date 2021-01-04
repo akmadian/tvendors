@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Hero />
-    <ReviewsModal vendor="vendor2"/>
     <div id="content">
       <MainTable />
     </div>
@@ -22,14 +21,12 @@
 <script>
 import Hero from './components/Hero'
 import MainTable from './components/MainTable'
-import ReviewsModal from './components/ReviewsModal'
 
 export default {
   name: 'App',
   components: {
     Hero,
-    MainTable,
-    ReviewsModal
+    MainTable
   },
   metaInfo: {
     meta: [

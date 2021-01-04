@@ -427,7 +427,7 @@ let reviews = [{
 }, {
   id: 2,
   reviewer_name: "name2",
-  vendor_name: "vendor2",
+  vendor_name: "White2Tea",
   review_date: "date2",
   likes: 0,
   dislikes: 2,
@@ -435,7 +435,7 @@ let reviews = [{
 }, {
   id: 3,
   reviewer_name: "name3",
-  vendor_name: "vendor2",
+  vendor_name: "White2Tea",
   review_date: "date3",
   likes: 0,
   dislikes: 3,
@@ -454,6 +454,9 @@ let reviews = [{
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db */ "./src/db.js");
+
+
+const uuidv4 = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
 
 const resolvers = {
   Query: {
@@ -476,11 +479,12 @@ const resolvers = {
   },
   Mutation: {
     createReview: (parent, {
-      id,
       reviewer_name,
       vendor_name,
       review_body
     }, context, info) => {
+      const id = uuidv4();
+      const date = Date().toString();
       const newReview = {
         id,
         reviewer_name,
@@ -488,8 +492,9 @@ const resolvers = {
         review_body,
         likes: 0,
         dislikes: 0,
-        review_date: "newdate"
+        review_date: date
       };
+      console.log(newReview);
       _db__WEBPACK_IMPORTED_MODULE_0__["reviews"].push(newReview);
       return newReview;
     },
@@ -531,8 +536,8 @@ const resolvers = {
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"allreviews"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"reviews"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"vendor_name"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Review"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"reviewer_name"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"vendor_name"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review_date"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"likes"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"dislikes"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review_body"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Mutation"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"createReview"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"reviewer_name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"vendor_name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"review_body"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"updateLikeDislike"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"isLike"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"add"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}},"directives":[]}]}],"loc":{"start":0,"end":538}};
-    doc.loc.source = {"body":"type Query {\n    allreviews: [Review!]!\n    review(id: ID!): Review\n    reviews(vendor_name: String): [Review!]!\n}\n\ntype Review {\n    id: ID\n    reviewer_name: String\n    vendor_name: String\n    review_date: String\n    likes: Int\n    dislikes: Int\n    review_body: String\n}\n\ntype Mutation {\n    createReview (\n        id: ID!,\n        reviewer_name: String!,\n        vendor_name: String!,\n        review_body: String!\n    ): Review!\n    updateLikeDislike (\n        id: ID!,\n        isLike: Boolean!,\n        add: Boolean!\n    ): Review!\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Query"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"allreviews"},"arguments":[],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]}],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"reviews"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"vendor_name"},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}}}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Review"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"id"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"reviewer_name"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"vendor_name"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review_date"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"likes"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"dislikes"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"review_body"},"arguments":[],"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}]},{"kind":"ObjectTypeDefinition","name":{"kind":"Name","value":"Mutation"},"interfaces":[],"directives":[],"fields":[{"kind":"FieldDefinition","name":{"kind":"Name","value":"createReview"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"reviewer_name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"vendor_name"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"review_body"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}},"directives":[]},{"kind":"FieldDefinition","name":{"kind":"Name","value":"updateLikeDislike"},"arguments":[{"kind":"InputValueDefinition","name":{"kind":"Name","value":"id"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"isLike"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]},{"kind":"InputValueDefinition","name":{"kind":"Name","value":"add"},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]}],"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Review"}}},"directives":[]}]}],"loc":{"start":0,"end":521}};
+    doc.loc.source = {"body":"type Query {\n    allreviews: [Review!]!\n    review(id: ID!): Review\n    reviews(vendor_name: String): [Review!]!\n}\n\ntype Review {\n    id: ID\n    reviewer_name: String\n    vendor_name: String\n    review_date: String\n    likes: Int\n    dislikes: Int\n    review_body: String\n}\n\ntype Mutation {\n    createReview (\n        reviewer_name: String!,\n        vendor_name: String!,\n        review_body: String!\n    ): Review!\n    updateLikeDislike (\n        id: ID!,\n        isLike: Boolean!,\n        add: Boolean!\n    ): Review!\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -655,6 +660,17 @@ module.exports = require("fs");
 /***/ (function(module, exports) {
 
 module.exports = require("path");
+
+/***/ }),
+
+/***/ "uuid/v4":
+/*!**************************!*\
+  !*** external "uuid/v4" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("uuid/v4");
 
 /***/ }),
 

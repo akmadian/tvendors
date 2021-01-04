@@ -44,15 +44,23 @@
             <b-table-column field="description" label="Description" v-slot="props">
                 {{ props.row.description }}
             </b-table-column>
+            <b-table-column v-slot="props">
+                <ReviewsModal :vendor="props.row.name"/>
+            </b-table-column>
         </b-table>
     </span>
 </template>
 <script>
+import ReviewsModal from './ReviewsModal'
+
 import tvendors from '../tvendors.json'
 const productTypesData = tvendors.productTypes.all
 
 export default {
     name: 'MainTable',
+    components: {
+        ReviewsModal
+    },
     data() {
         return {
             filteredVendors: tvendors.vendors,

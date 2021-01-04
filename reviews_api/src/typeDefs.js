@@ -1,3 +1,6 @@
+import { gql } from 'apollo-server-express'
+
+export const typeDefs = gql`
 type Query {
     allreviews: [Review!]!
     review(id: ID!): Review
@@ -14,9 +17,15 @@ type Review {
     review_body: String
 }
 
+type Vendor {
+    id: ID
+    name: String
+    
+}
+
+
 type Mutation {
     createReview (
-        id: ID!,
         reviewer_name: String!,
         vendor_name: String!,
         review_body: String!
@@ -26,4 +35,4 @@ type Mutation {
         isLike: Boolean!,
         add: Boolean!
     ): Review!
-}
+}`
