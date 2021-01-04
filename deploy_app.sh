@@ -1,10 +1,9 @@
-# Build and deploy client
-cd client
-npm i
-npm run build
-sudo -u nodejs pm2 start server
+ssh root@178.128.77.94
 
-cd ..
-cd reviews_api
-npm i
-sudo -u nodejs pm2 start
+cd tvendors
+git pull
+cd client
+sudo npm run build
+
+pm2 stop all
+pm2 start server.js

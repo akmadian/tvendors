@@ -1,4 +1,5 @@
 import { Review } from './models/review.js'
+import { Vendor } from './models/vendor.js'
 
 export const resolvers = {
     Query: {
@@ -10,6 +11,9 @@ export const resolvers = {
             console.log(res)
             return res
             
+        },
+        vendors: (_, __, ___, ____) => {
+            console.log(Vendor.distinct('name'))
         },
         review: (_, { id }, __, ___) => {
             const res = Review.findOne(
@@ -60,6 +64,18 @@ export const resolvers = {
             await newReview.save()
             console.log(newReview)
             return newReview
+        },
+        createVendor: async(_, { name, abbreviation, url, logoUrl, shippingOrigin, shippingRange, style, description, offersSamples, knownFor, productTypes}, __, ___) => {
+            console.log(`Creating record for vendor: ${name}`)
+            const id = Date.now()
+            const newVendor = new Vendor({
+                id, name, abbreviation, url, logoUrl,
+                shippingOrigin, shippingRange, style, description,
+                offersSamples, knownFor, productTypes
+            })
+            await newVendor.save()
+            console.log(newVendor)
+            return newVendor
         }
     }
 }

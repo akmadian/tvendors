@@ -17,7 +17,7 @@ const startServer = async () => {
 
     server.applyMiddleware({ app })
 
-    await mongoose.connect("mongodb+srv://2I9dCsfxL8XN:2I9dCsfxL8XN@reviews.0je5j.mongodb.net/reviews_db?retryWrites=true&w=majority", {
+    await mongoose.connect("mongodb+srv://2I9dCsfxL8XN:<pass>@reviews.0je5j.mongodb.net/reviews_db?retryWrites=true&w=majority", {
         useNewUrlParser: true, 
         useUnifiedTopology: true
     });

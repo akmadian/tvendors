@@ -12,18 +12,20 @@ Planned features include:
 ![Screenshot of tvendors](screenshot.png)
 
 ## Technical Stuff
-tvendors is made with a Vue.js frontend, and a MongoDB/ GraphQL backend.
+tvendors is made with a Vue.js frontend, and a MongoDB/ GraphQL backend. Both the frontend and backend are hosted on Digital Ocean Droplets.
 
 ### How to run this locally
 ``` bash
 $ npm i
 
 # Start graphql
-$ cd reviews_api
+$ cd api
 $ npm i
-$ npm run dev
+$ node src/index.js
 $ cd ..
 
 # Start frontend
-$ npm run serve
+$ cd client
+$ npm i
+$ npm run dev
 ```
