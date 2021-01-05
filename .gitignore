@@ -23,5 +23,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-reviews_api/digitalocean_tvendors_hosting
-reviews_api/digitalocean_tvendors_hosting.pub
+client/dist/index.html
+client/dist/

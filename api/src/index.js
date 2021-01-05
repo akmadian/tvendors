@@ -4,6 +4,9 @@ import cors from 'cors'
 import express from 'express'
 import {resolvers} from './resolvers.js'
 import { typeDefs } from './typeDefs.js'
+import fetch from 'node-fetch'
+import pkg1 from 'apollo-link-http'
+const { createHttpLink } = pkg1;
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -14,7 +17,8 @@ app.use(cors())
 const startServer = async () => {
     const server = new ApolloServer({
         typeDefs,
-        resolvers
+        resolvers,
+        link: createHttpLink({ uri: "", fetch: fetch })
     })
 
     server.applyMiddleware({ app })

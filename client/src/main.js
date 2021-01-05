@@ -16,7 +16,7 @@ Vue.use(VueApollo)
 Vue.config.productionTip = false
 
 const apolloClient = new ApolloClient ({
-    uri: process.env.NODE_ENV === "production" ? process.env.API_PROD_URL : 'http://localhost:5000/graphql',
+	uri: 'https://tvendors.io/graphql',
     connectToDevTools: true
 })
 
