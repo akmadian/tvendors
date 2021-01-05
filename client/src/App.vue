@@ -4,8 +4,9 @@
     <div id="content">
       <MainTable />
     </div>
+    <br><br>
+    <DBPanel/>
     <span id="footer">
-      <br><br><br>
       <div>
         v0.0.2 | 
         Designed and built by <a href="https://arimadian.info">Ari Madian</a> (bandsaw bandit in CommuniTEA) | 
@@ -21,12 +22,14 @@
 <script>
 import Hero from './components/Hero'
 import MainTable from './components/MainTable'
+import DBPanel from './components/DBPanel'
 
 export default {
   name: 'App',
   components: {
     Hero,
-    MainTable
+    MainTable,
+    DBPanel
   },
   metaInfo: {
     meta: [
@@ -56,6 +59,7 @@ export default {
 }
 
 #footer a {
+  filter: opacity(1);
   font-weight: 600;
   color: rgb(50, 50, 50);
   text-decoration: underline dotted;

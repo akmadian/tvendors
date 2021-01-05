@@ -13,7 +13,8 @@ export const resolvers = {
             
         },
         vendors: (_, __, ___, ____) => {
-            console.log(Vendor.distinct('name'))
+            const res = Vendor.find()
+            return res
         },
         review: (_, { id }, __, ___) => {
             const res = Review.findOne(
@@ -24,7 +25,17 @@ export const resolvers = {
             return res
         },
         allreviews: (_, __, ___, ____) => {
-            return reviews;
+            const res = Review.find();
+            console.log(res)
+            return res
+        },
+        distinctShippingOrigins: (_, __, ___, ____) => {
+            const res = Vendor.distinct("shippingOrigin")
+            return res
+        },
+        distinctProductTypes: (_, __, ___, ____) => {
+            const res = Vendor.distinct("productTypes")
+            return res
         }
     },
     Mutation: {

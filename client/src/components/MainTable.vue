@@ -52,9 +52,8 @@
 </template>
 <script>
 import ReviewsModal from './ReviewsModal'
-
-import tvendors from '../tvendors.json'
-const productTypesData = tvendors.productTypes.all
+import gql from 'graphql-tag'
+//const productTypesData = tvendors.productTypes.all
 
 export default {
     name: 'MainTable',
@@ -63,9 +62,13 @@ export default {
     },
     data() {
         return {
-            filteredVendors: tvendors.vendors,
-            filteredTags: productTypesData,
-            originCountries: tvendors.shippingOriginCountries,
+            queryCache: {
+                vendors: undefined,
+                distinctProductTypes: undefined,
+                distinctShippingOrigins: undefined
+            },
+            filteredVendors: undefined,
+            filteredTags: undefined,
             tags: [],
             allowedOrigins: [],
             flags: {
@@ -79,15 +82,15 @@ export default {
     },
     methods: {
         getFilteredTags(text) {
-            this.filteredTags = productTypesData.filter((productType) => {
+            this.filteredTags = this.queryCache.distinctProductTypes.filter((productType) => {
                 return productType.toLowerCase().includes(text.toLowerCase())
             })
         },
         filterVendors() {
             if (this.tags.length === 0) {
-                this.filteredVendors = tvendors.vendors
+                this.filteredVendors = this.queryCache.vendors
             } else {
-                this.filteredVendors = tvendors.vendors.filter((vendor) => {
+                this.filteredVendors = this.queryCache.vendors.filter((vendor) => {
                     return this.tags.some(r => vendor.productTypes.includes(r))
                 })
             }
@@ -100,6 +103,42 @@ export default {
             },
             deep: true
         }
+    },
+    apollo: {
+        vendors: {
+            query: gql`
+            query {
+                vendors {
+                    id, name, abbreviation, url,
+                    logoUrl, shippingOrigin,
+                    style, description, offersSamples, knownFor,
+                    productTypes
+                }
+            }`,
+            result ({ data }) {
+                this.filteredVendors = data.vendors
+                this.queryCache.vendors = data.vendors
+            }
+        },
+        distinctProductTypes: {
+            query: gql`
+            query {
+                distinctProductTypes
+            }`,
+            result ({ data }) {
+                this.filteredTags = data.distinctProductTypes
+                this.queryCache.distinctProductTypes = data.distinctProductTypes
+            }
+        },
+        distinctShippingOrigins: {
+            query: gql`
+            query {
+                distinctShippingOrigins   
+            }`,
+            result ({ data }) {
+                this.queryCache.distinctShippingOrigins = data.distinctShippingOrigins
+            }
+        },
     }
 }
 </script>

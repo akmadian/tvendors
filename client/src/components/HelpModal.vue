@@ -1,10 +1,10 @@
 <template>
     <section>
         <b-button
-            @click="isHelpModalActive = true">
+            @click="helpModalActive = true">
             Not sure how to use tvendors? Click here.
         </b-button>
-        <b-modal v-model="isHelpModalActive">
+        <b-modal v-model="helpModalActive">
             <div class="card">
                 <div class="card-content">
                     <h1 class="is-size-3">How to use tvendors</h1>
@@ -42,7 +42,7 @@ export default {
     name: 'HelpModal',
     data() {
         return {
-            isHelpModalActive: false
+            helpModalActive: false
         }
     }
 }

@@ -2,9 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import Meta from 'vue-meta'
 import VueApollo from 'vue-apollo'
-
+import dotenv from 'dotenv'
 import Buefy from 'buefy'
+import ApolloClient from 'apollo-boost'
 import 'buefy/dist/buefy.css'
+
+dotenv.config()
 
 Vue.use(Buefy)
 Vue.use(Meta)
@@ -12,10 +15,9 @@ Vue.use(VueApollo)
 
 Vue.config.productionTip = false
 
-import ApolloClient from 'apollo-boost'
-
 const apolloClient = new ApolloClient ({
-	uri: 'http://138.68.15.116'
+    uri: process.env.NODE_ENV === "production" ? process.env.API_PROD_URL : 'http://localhost:5000/graphql',
+    connectToDevTools: true
 })
 
 const apolloProvider = new VueApollo({

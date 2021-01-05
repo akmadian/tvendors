@@ -7,6 +7,8 @@ type Query {
     review(id: ID!): Review
     reviews(vendor_name: String): [Review!]!
     vendors: [Vendor!]!
+    distinctShippingOrigins: [String!]!
+    distinctProductTypes: [String!]!
 }
 
 type Review {

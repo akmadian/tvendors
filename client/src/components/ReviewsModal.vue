@@ -89,7 +89,7 @@ export default {
     props: ['vendor'],
     data() {
         return {
-            modalOpen: this.vendor === "White2Tea",
+            modalOpen: false,
             submitReviewOpen: true,
             submit_name: '',
             submit_body: '',

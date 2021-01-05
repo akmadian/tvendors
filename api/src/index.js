@@ -5,6 +5,8 @@ import express from 'express'
 import {resolvers} from './resolvers.js'
 import { typeDefs } from './typeDefs.js'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express()
 app.use(cors())
@@ -17,7 +19,7 @@ const startServer = async () => {
 
     server.applyMiddleware({ app })
 
-    await mongoose.connect("mongodb+srv://2I9dCsfxL8XN:<pass>@reviews.0je5j.mongodb.net/reviews_db?retryWrites=true&w=majority", {
+    await mongoose.connect(`mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PASS}@reviews.0je5j.mongodb.net/reviews_db?retryWrites=true&w=majority`, {
         useNewUrlParser: true, 
         useUnifiedTopology: true
     });
