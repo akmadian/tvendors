@@ -37,8 +37,8 @@
                 {{ props.row.shippingRange }}
             </b-table-column>-->
             <b-table-column field="specialties" label="Specialties" v-slot="props">
-                <template v-for="specialty in props.row.specialties">
-                    <b-tag :key="specialty" rounded>{{ specialty }}</b-tag>
+                <template v-for="kf in props.row.knownFor">
+                    <b-tag :key="kf" rounded>{{ kf }}</b-tag>
                 </template>
             </b-table-column>
             <b-table-column field="description" label="Description" v-slot="props">

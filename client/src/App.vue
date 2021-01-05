@@ -16,6 +16,7 @@
         Privacy: tvendors does not hold on to any information that you do not explicitly give it to hold on to (this only ever happens if you leave a review). If you want all of your information deleted from tvendors, please contact me and I'll see to it.
       </div>
     </span>
+    <br><br>
   </div>
 </template>
 
@@ -30,14 +31,6 @@ export default {
     Hero,
     MainTable,
     DBPanel
-  },
-  metaInfo: {
-    meta: [
-      {property: 'og:title', content: "tvendors"},
-      {property: 'og:type', content: 'website'},
-      {property: 'og:image', content: 'https://mmaaggnnaa.files.wordpress.com/2009/05/the-tea-garden.jpg'},
-      {property: 'og:description', content: 'Looking for a specific tea product but not sure where to get it from? Use tvendors.'}
-    ]
   }
 }
 </script>
