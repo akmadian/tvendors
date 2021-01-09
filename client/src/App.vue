@@ -8,7 +8,7 @@
     <DBPanel/>
     <span id="footer">
       <div>
-        v0.0.2 | 
+        v0.0.3 | 
         Designed and built by <a href="https://arimadian.info">Ari Madian</a> (bandsaw bandit in CommuniTEA) | 
         tvendors is <a href="https://github.com/akmadian/tvendors">open source</a> under <a href="https://github.com/akmadian/tvendors/blob/main/LICENSE">the GNU GPL-3.0 license</a>
       </div>

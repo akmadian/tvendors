@@ -3,17 +3,86 @@
         <b-field label="Search For Products">
             <b-taginput
                 id="search-field"
-                v-model="tags"
-                :data="filteredTags"
+                v-model="filteringIn.productTypes"
+                :data="filteringTmp.productTypes"
                 autocomplete
                 field="product.type"
                 placeholder="Search for tea types or products. For Example: Pu Erh, or Yixing"
-                @typing="getFilteredTags">
+                @typing="getFilteredProductTypes">
             </b-taginput>
         </b-field>
+        <div class="columns">
+            <div class="column">
+                <b-field label="Shipping Origin">
+                    <b-taginput
+                        v-model="filteringIn.origins"
+                        :allow-new="false"
+                        :data="distinctShippingOrigins"
+                        placeholder="Any Origin">
+                    </b-taginput>
+                </b-field>
+            </div>
+            <div class="column">
+                <b-field label="Known For">
+                    <b-taginput
+                        v-model="filteringIn.knownFor"
+                        :allow-new="false"
+                        :data="distinctKnownFor"
+                        placeholder="Anything">
+                    </b-taginput>
+                </b-field>
+            </div>
+            <div class="column is-narrow">
+                <b-field label="Style">
+                    <b-select v-model="filteringIn.style" placeholder="Any">
+                        <option :value="undefined">Any</option>
+                        <option value="Both">Both</option>
+                        <option value="Gong Fu">Gong Fu</option>
+                        <option value="Western">Western</option>
+                    </b-select>
+                </b-field>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <b-checkbox
+                        v-model="filteringIn.offersSamples"
+                        :indeterminate="true">
+                        Offers Samples
+                    </b-checkbox>
+                </div>
+            </div>
+        </div>
         <br/>
-        <b-table 
-            :data=filteredVendors
+        <section v-if="$apollo.queries.vendorsWithFilters.loading">
+            <nav class="level is-mobile" v-for="_ of 5" :key="_">
+                <div class="level-left">
+                    <span class="level-item" style="margin-left: 1rem; margin-right: 1.1rem">
+                        <b-skeleton width="2rem" height="2rem"></b-skeleton>
+                    </span>
+                    <span class="level-item" style="margin-right: 2.3rem">
+                        <b-skeleton width="7.5rem"></b-skeleton>
+                    </span>
+                    <span class="level-item" style="margin-right: 1rem">
+                        <b-skeleton width="4.5rem"></b-skeleton>
+                    </span>
+                    <span class="level-item" style="margin-right: 2rem">
+                        <b-skeleton width="5rem"></b-skeleton>
+                    </span>
+                    <span class="level-item" style="margin-right: 2rem">
+                        <b-skeleton width="7.5rem"></b-skeleton>
+                    </span>
+                    <span class="level-item">
+                        <b-skeleton width="42rem"></b-skeleton>
+                    </span>
+                    <span class="level-item">
+                        <b-skeleton width="7.5rem"></b-skeleton>
+                    </span>
+                </div>
+            </nav>
+        </section>
+        <b-table
+            v-else
+            :data=vendorsWithFilters
             style="width: 100%;">
             <b-table-column field="logoUrl" label="" v-slot="props">
                 <b-image
@@ -36,7 +105,7 @@
             <!--<b-table-column field="shippingRange" label="Shipping Range" v-slot="props">
                 {{ props.row.shippingRange }}
             </b-table-column>-->
-            <b-table-column field="specialties" label="Specialties" v-slot="props">
+            <b-table-column field="specialties" label="Known For" v-slot="props">
                 <template v-for="kf in props.row.knownFor">
                     <b-tag :key="kf" rounded>{{ kf }}</b-tag>
                 </template>
@@ -62,62 +131,79 @@ export default {
     },
     data() {
         return {
+            animated: true,
             queryCache: {
                 vendors: undefined,
                 distinctProductTypes: undefined,
-                distinctShippingOrigins: undefined
+                distinctShippingOrigins: undefined,
+                distinctKnownFor: undefined
             },
-            filteredVendors: undefined,
-            filteredTags: undefined,
-            tags: [],
-            allowedOrigins: [],
+            filteringTmp: {
+                productTypes: [],
+
+            },
+            filteringIn: {
+                productTypes: undefined,
+                shippingOrigin: undefined,
+                knownFor: undefined,
+                offersSamples: undefined,
+                style: undefined
+            },
+            filteringOut: {
+                vendors: undefined,
+                productTypes: undefined
+            },
             flags: {
                 "China": "🇨🇳",
                 "Taiwan": "🇹🇼",
                 "US": "🇺🇸",
                 "UK": "🇬🇧",
-                "Australia": "🇦🇺"
+                "Australia": "🇦🇺",
+                "Hong Kong": "🇭🇰"
             }
         }
     },
     methods: {
-        getFilteredTags(text) {
-            this.filteredTags = this.queryCache.distinctProductTypes.filter((productType) => {
+        getFilteredProductTypes(text) {
+            this.filteringTmp.productTypes = this.queryCache.distinctProductTypes.filter((productType) => {
                 return productType.toLowerCase().includes(text.toLowerCase())
             })
-        },
-        filterVendors() {
-            if (this.tags.length === 0) {
-                this.filteredVendors = this.queryCache.vendors
-            } else {
-                this.filteredVendors = this.queryCache.vendors.filter((vendor) => {
-                    return this.tags.some(r => vendor.productTypes.includes(r))
-                })
-            }
         }
     },
     watch: {
-        tags: {
-            handler() {
-                this.filterVendors()
+        filteringIn: {
+            handler(newVal, oldVal) {
+                console.log(oldVal)
+                // In case one of the filtering options is reset to have no filtering
+                // ex. productTypes['Yixing'] -> productTypes[]
+                for (const [key, value] of Object.entries(newVal)) {
+                    if (typeof value === "object" && value.length === 0) {
+                        this.filteringIn[key] = undefined
+                    }
+                }
+                this.$apollo.queries.vendorsWithFilters.refresh()
             },
             deep: true
-        }
+        },
     },
     apollo: {
-        vendors: {
-            query: gql`
-            query {
-                vendors {
+        vendorsWithFilters: {
+            query: gql`query vendorsWithFilters($productTypes: [String!], $shippingOrigin: [String!], $knownFor: [String!], $offersSamples: Boolean, $style: String) {
+                vendorsWithFilters(productTypes: $productTypes, shippingOrigin: $shippingOrigin, knownFor: $knownFor, offersSamples: $offersSamples, style: $style) {
                     id, name, abbreviation, url,
                     logoUrl, shippingOrigin,
                     style, description, offersSamples, knownFor,
                     productTypes
                 }
             }`,
-            result ({ data }) {
-                this.filteredVendors = data.vendors
-                this.queryCache.vendors = data.vendors
+            variables() {
+                return {
+                    productTypes: this.filteringIn.productTypes,
+                    shippingOrigin: this.filteringIn.shippingOrigin,
+                    knownFor: this.filteringIn.knownFor,
+                    offersSamples: this.filteringIn.offersSamples,
+                    style: this.filteringIn.style
+                }
             }
         },
         distinctProductTypes: {
@@ -126,7 +212,7 @@ export default {
                 distinctProductTypes
             }`,
             result ({ data }) {
-                this.filteredTags = data.distinctProductTypes
+                this.filteringOut.productTypes = data.distinctProductTypes
                 this.queryCache.distinctProductTypes = data.distinctProductTypes
             }
         },
@@ -137,6 +223,15 @@ export default {
             }`,
             result ({ data }) {
                 this.queryCache.distinctShippingOrigins = data.distinctShippingOrigins
+            }
+        },
+        distinctKnownFor: {
+            query: gql`
+            query {
+                distinctKnownFor
+            }`,
+            result ({ data }) {
+                this.queryCache.distinctKnownFor = data.distinctKnownFor
             }
         },
     }

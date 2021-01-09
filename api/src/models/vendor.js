@@ -12,4 +12,11 @@ export const Vendor = mongoose.model('Vendor', {
     offersSamples: Boolean,
     knownFor: [String],
     productTypes: [String],
+    nReviews: Number,
+    avg_quality: Number,
+    avg_shipping: Number,
+    avg_value: Number,
+    avg_selection: Number,
+    avg_cust: Number,
+    rating_composite: Number
 })
