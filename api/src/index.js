@@ -23,6 +23,8 @@ const startServer = async () => {
 
     server.applyMiddleware({ app })
 
+    const dbName = process.env.NODE_ENV === "production" ? "tvendors_prod" : "reviews_db"
+
     await mongoose.connect(`mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PASS}@reviews.0je5j.mongodb.net/reviews_db?retryWrites=true&w=majority`, {
         useNewUrlParser: true, 
         useUnifiedTopology: true

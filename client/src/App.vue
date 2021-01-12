@@ -8,7 +8,7 @@
     <DBPanel/>
     <span id="footer">
       <div>
-        v0.0.2 | 
+        v0.0.3 | 
         Designed and built by <a href="https://arimadian.info">Ari Madian</a> (bandsaw bandit in CommuniTEA) | 
         tvendors is <a href="https://github.com/akmadian/tvendors">open source</a> under <a href="https://github.com/akmadian/tvendors/blob/main/LICENSE">the GNU GPL-3.0 license</a>
       </div>
@@ -16,6 +16,7 @@
         Privacy: tvendors does not hold on to any information that you do not explicitly give it to hold on to (this only ever happens if you leave a review). If you want all of your information deleted from tvendors, please contact me and I'll see to it.
       </div>
     </span>
+    <br><br>
   </div>
 </template>
 
@@ -30,14 +31,6 @@ export default {
     Hero,
     MainTable,
     DBPanel
-  },
-  metaInfo: {
-    meta: [
-      {property: 'og:title', content: "tvendors"},
-      {property: 'og:type', content: 'website'},
-      {property: 'og:image', content: 'https://mmaaggnnaa.files.wordpress.com/2009/05/the-tea-garden.jpg'},
-      {property: 'og:description', content: 'Looking for a specific tea product but not sure where to get it from? Use tvendors.'}
-    ]
   }
 }
 </script>
