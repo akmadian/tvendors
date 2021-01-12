@@ -1,0 +1,10 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy
+  uses: garygrossgarten/github-action-ssh@v0.6.3
+  with:
+  command: ls -a
+  host: ${{ secrets.DEPLOY_SSH_HOST }}
+  username: gh-actions
+  passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
+  privateKey: ${{ secrets.DEPLOY_SSH_KEY }}
