@@ -6,6 +6,7 @@
     </div>
     <br><br>
     <DBPanel/>
+    <AddVendor/>
     <span id="footer">
       <div>
         v0.0.3 | 
@@ -24,13 +25,15 @@
 import Hero from './components/Hero'
 import MainTable from './components/MainTable'
 import DBPanel from './components/DBPanel'
+import AddVendor from './components/AddVendor'
 
 export default {
   name: 'App',
   components: {
     Hero,
     MainTable,
-    DBPanel
+    DBPanel,
+    AddVendor
   }
 }
 </script>

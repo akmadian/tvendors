@@ -15,10 +15,11 @@
             <div class="column">
                 <b-field label="Shipping Origin">
                     <b-taginput
-                        v-model="filteringIn.origins"
+                        v-model="filteringIn.shippingOrigin"
                         :allow-new="false"
-                        :data="distinctShippingOrigins"
-                        placeholder="Any Origin">
+                        :data="filteringTmp.shippingOrigin"
+                        placeholder="Any Origin"
+                        @typing="getFilteredShippingOrigins">
                     </b-taginput>
                 </b-field>
             </div>
@@ -27,19 +28,10 @@
                     <b-taginput
                         v-model="filteringIn.knownFor"
                         :allow-new="false"
-                        :data="distinctKnownFor"
-                        placeholder="Anything">
+                        :data="filteringTmp.knownFor"
+                        placeholder="Anything"
+                        @typing="getFilteredKnownFor">
                     </b-taginput>
-                </b-field>
-            </div>
-            <div class="column is-narrow">
-                <b-field label="Style">
-                    <b-select v-model="filteringIn.style" placeholder="Any">
-                        <option :value="undefined">Any</option>
-                        <option value="Both">Both</option>
-                        <option value="Gong Fu">Gong Fu</option>
-                        <option value="Western">Western</option>
-                    </b-select>
                 </b-field>
             </div>
             <div class="column">
@@ -93,11 +85,6 @@
             <b-table-column field="name" label="Vendor" v-slot="props">
                 <a :href="props.row.url" style="vertical-align: middle;">{{ props.row.name }}</a>
             </b-table-column>
-            <b-table-column field="style" label="Style" v-slot="props">
-                <b-tag rounded>
-                    {{ props.row.style }}
-                </b-tag>
-            </b-table-column>
             <b-table-column field="shippingOrigin" label="Shipping Origin" v-slot="props">
                 {{ flags[props.row.shippingOrigin]}}
                 {{ props.row.shippingOrigin }}
@@ -140,7 +127,8 @@ export default {
             },
             filteringTmp: {
                 productTypes: [],
-
+                shippingOrigin: [],
+                knownFor: []
             },
             filteringIn: {
                 productTypes: undefined,
@@ -167,6 +155,16 @@ export default {
         getFilteredProductTypes(text) {
             this.filteringTmp.productTypes = this.queryCache.distinctProductTypes.filter((productType) => {
                 return productType.toLowerCase().includes(text.toLowerCase())
+            })
+        },
+        getFilteredShippingOrigins(text) {
+            this.filteringTmp.shippingOrigin = this.queryCache.distinctShippingOrigins.filter((shippingOrigin) => {
+                return shippingOrigin.toLowerCase().includes(text.toLowerCase())
+            })
+        },
+        getFilteredKnownFor(text) {
+            this.filteringTmp.knownFor = this.queryCache.distinctKnownFor.filter((knownFor) => {
+                return knownFor.toLowerCase().includes(text.toLowerCase())
             })
         }
     },
